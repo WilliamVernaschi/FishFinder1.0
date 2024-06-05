@@ -1,0 +1,7 @@
+{
+  "name": "FishFinder",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
