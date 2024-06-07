@@ -12,19 +12,20 @@ export interface SensorData {
 }
 
 export class SensorInterface{
-  private dataPointsCache : MinQueue<SensorData>;
+  private dataPointsCache : MinQueue<number>;
   private lastSensorEvent : SensorData | null;
 
   constructor(dataPointsCacheSize : number){
 
     const eventSource = new EventSource('http://localhost:3000/sensor');
     this.lastSensorEvent = null;
-    this.dataPointsCache = new MinQueue<SensorData>();
+    this.dataPointsCache = new MinQueue<number>();
 
     eventSource.onmessage = (event) => {
       this.lastSensorEvent = JSON.parse(event.data);
+
       if (this.lastSensorEvent) {
-        this.dataPointsCache.push(this.lastSensorEvent);
+        this.dataPointsCache.push(this.getDepth());
       }
 
       if(this.dataPointsCache.size > dataPointsCacheSize) this.dataPointsCache.pop();
@@ -49,7 +50,7 @@ export class SensorInterface{
     return this.dataPointsCache.getMin;
   }
 
-  getSensorInfo(){
+  get getSensorInfo(){
     return this.lastSensorEvent;
   }
 }

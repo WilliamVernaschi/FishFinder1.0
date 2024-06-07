@@ -72,7 +72,7 @@ export class FishViewComponent implements OnInit, AfterViewInit {
     }, 1000)
 
     setInterval(() => {
-      const depthView = this.getDepthView();
+      const depthView = this.sensorInterface.lowestDepthInCache + 2;
 
       this.scale.adjustScale(depthView);
       this.grid.adjustDepthView(depthView);
@@ -86,15 +86,12 @@ export class FishViewComponent implements OnInit, AfterViewInit {
 
   }
 
-  private getDepthView() : number {
-    return 30;
-  }
 
   private start() : void {
     // @ts-ignore
     this.app.ticker.add(time => {
-      this.grid.moveLeft(time.deltaTime);
-      this.grid.updateSensorInfo(this.sensorInterface.getDepth());
+      this.grid.moveLeft(time.deltaTime)
+      this.grid.repositionFirstColumn()
     });
   }
 }

@@ -21,6 +21,6 @@ export class SensorDepthAndTemp extends Container{
     this.depthText.text = `${depth.toFixed(2)}m`
   }
   updateTemp(temp : number){
-    this.tempText.text = `${temp.toFixed(2)}m`
+    this.tempText.text = `${temp.toFixed(1)}ºC`
   }
 }

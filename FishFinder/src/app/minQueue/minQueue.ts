@@ -1,14 +1,14 @@
 import Denque from 'denque'
 
-interface Item{
-  value : any
+interface Item<T>{
+  value : T
   time : number
 }
 export class MinQueue<element>{
 
   private l : number
   private r : number
-  private deque : Denque<Item>
+  private deque : Denque<Item<element>>
 
 
 
@@ -18,19 +18,19 @@ export class MinQueue<element>{
     this.deque = new Denque();
 
   }
-  push(value : any){
+  push(value : element){
     // @ts-ignore
-    while(!this.deque.isEmpty() && value < this.deque.peekBack().value){
+    while(!this.deque.isEmpty() && value > this.deque.peekBack().value){
       this.deque.pop()
     }
 
-    this.deque.push({value, time : this.r})
+    this.deque.push({value : value, time : this.r})
     this.r++
   }
 
   pop() : void {
     // @ts-ignore
-    if (!this.deque.isEmpty() && this.l < this.deque.peekFront().time) {
+    if (!this.deque.isEmpty() && this.l == this.deque.peekFront().time) {
       this.deque.shift()
     }
 
@@ -38,7 +38,7 @@ export class MinQueue<element>{
 
   }
 
-  get getMin() : element | null{
+  get getMin() : element | undefined{
     return this.deque.peekFront()?.value
   }
 
