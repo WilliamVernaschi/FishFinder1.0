@@ -38,7 +38,7 @@ export class FishViewComponent implements OnInit, AfterViewInit {
 
 
     const app = new PIXI.Application();
-    await app.init({resizeTo: window, background: 0xff0000});
+    await app.init({resizeTo: window, background: 0x0000ff});
 
 
     this.app = app;

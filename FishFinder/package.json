@@ -30,6 +30,7 @@
     "@capacitor/status-bar": "6.0.0",
     "@datastructures-js/queue": "^4.2.3",
     "@ionic/angular": "^8.0.0",
+    "@types/node": "^20.14.2",
     "chroma-js": "^2.4.2",
     "denque": "^2.1.0",
     "express": "^4.19.2",
