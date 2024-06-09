@@ -40,17 +40,19 @@ export class FishViewComponent implements OnInit, AfterViewInit {
     const app = new PIXI.Application();
     await app.init({resizeTo: window, background: 0x0000ff});
 
-
     this.app = app;
 
     this.pixiContainer.nativeElement.appendChild(app.canvas);
 
 
+
+    const getNumColumns = Grid.getNumColumns(app.canvas.width, app.canvas.height)
+
+    this.sensorInterface = new SensorInterface(getNumColumns, true);
+
     this.grid = new Grid(app.canvas.width,
       app.canvas.height,
-      config.resolution)
-
-    this.sensorInterface = new SensorInterface(this.grid.numColumns);
+      this.sensorInterface)
 
 
     this.scale = new Scale(app.canvas.width,
@@ -72,7 +74,7 @@ export class FishViewComponent implements OnInit, AfterViewInit {
     }, 1000)
 
     setInterval(() => {
-      const depthView = this.sensorInterface.lowestDepthInCache + 2;
+      const depthView = this.sensorInterface.lowestDepthInCache + 2
 
       this.scale.adjustScale(depthView);
       this.grid.adjustDepthView(depthView);

@@ -1,4 +1,5 @@
 /node_modules/*
 /FishFinder/.angular/*
 node_modules
+/FishFinder/.angular
 /FishFinder/www/*

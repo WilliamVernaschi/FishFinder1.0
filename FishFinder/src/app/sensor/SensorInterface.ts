@@ -1,5 +1,7 @@
 
 import { MinQueue } from "../minQueue/minQueue";
+import {SignalGenerator} from "../simulator/signalGenerator";
+import random from "random";
 
 interface TransducerDataPoint {
   intensity : number,
@@ -14,22 +16,41 @@ export interface SensorData {
 export class SensorInterface{
   private dataPointsCache : MinQueue<number>;
   private lastSensorEvent : SensorData | null;
+  private readonly dataPointsCacheMaxSize : number;
 
-  constructor(dataPointsCacheSize : number){
+  constructor(dataPointsCacheMaxSize
+ : number, simulation : boolean){
+    this.lastSensorEvent = null
+    this.dataPointsCache = new MinQueue<number>()
+    this.dataPointsCacheMaxSize = dataPointsCacheMaxSize
 
-    const eventSource = new EventSource('http://localhost:3000/sensor');
-    this.lastSensorEvent = null;
-    this.dataPointsCache = new MinQueue<number>();
-
-    eventSource.onmessage = (event) => {
-      this.lastSensorEvent = JSON.parse(event.data);
-
-      if (this.lastSensorEvent) {
-        this.dataPointsCache.push(this.getDepth());
+    if(simulation){
+      const generator = new SignalGenerator(0.005, 0.05, 250, 30);
+      const sendSignals = () =>{
+        this.lastSensorEvent = {type: "samples", transducerData: generator.nextSignal()}
+        this.putInCache(this.lastSensorEvent)
+        setTimeout(sendSignals, 20 + random.float(0, 5))
       }
 
-      if(this.dataPointsCache.size > dataPointsCacheSize) this.dataPointsCache.pop();
-    };
+      sendSignals()
+    }
+    else{
+      const eventSource = new EventSource('http://localhost:3000/sensor');
+
+      eventSource.onmessage = (event) => {
+        this.lastSensorEvent = JSON.parse(event.data)
+        this.putInCache(this.lastSensorEvent)
+      }
+    }
+
+
+  }
+
+  putInCache(element: SensorData | null){
+    if(element){
+      this.dataPointsCache.push(this.getDepth());
+    }
+    if(this.dataPointsCache.size > this.dataPointsCacheMaxSize) this.dataPointsCache.pop()
   }
 
 

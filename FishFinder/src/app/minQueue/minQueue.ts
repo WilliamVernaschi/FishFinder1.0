@@ -8,7 +8,7 @@ export class MinQueue<element>{
 
   private l : number
   private r : number
-  private deque : Denque<Item<element>>
+  public deque : Denque<Item<element>>
 
 
 
@@ -16,7 +16,6 @@ export class MinQueue<element>{
     this.l = 1
     this.r = 1
     this.deque = new Denque();
-
   }
   push(value : element){
     // @ts-ignore

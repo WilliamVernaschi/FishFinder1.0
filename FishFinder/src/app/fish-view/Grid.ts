@@ -1,32 +1,34 @@
 import { Column } from "./Column";
 import { Container } from 'pixi.js';
-import { Queue } from '@datastructures-js/queue';
 import Denque from "denque";
-import { gsap } from 'gsap';
 import { SensorInterface } from '../sensor/SensorInterface'
+import { config } from './fish-view.config'
 
 export class Grid extends Container{
   private readonly W: number;
   private readonly H: number;
-  private resolution: number;
   private columns: Denque<any>;
   private sensorInterface : SensorInterface;
   private readonly squareSize: number;
   private currDepthView : number;
+  private numColumns: number;
 
-  constructor(width : number, height : number, resolution : number){
+  constructor(width : number, height : number, sensorInterface : SensorInterface){
     super();
-    this.W = width;
-    this.H = height;
-    this.resolution = resolution;
-    this.columns = new Denque();
-    this.squareSize = height / resolution;
-    this.currDepthView = 30;
-
-    const numColumns = (2*this.squareSize + this.W - (-2*this.squareSize))/this.squareSize;
-    this.sensorInterface = new SensorInterface(numColumns);
+    this.W = width
+    this.H = height
+    this.columns = new Denque()
+    this.squareSize = height / config.resolution
+    this.currDepthView = 30
+    this.numColumns = Math.round((2*this.squareSize + this.W - (-2*this.squareSize))/this.squareSize)
+    this.sensorInterface = sensorInterface
 
     this.setupGrid();
+  }
+
+  static getNumColumns(width : number, height : number){
+    const squareSize = height / config.resolution
+    return Math.round((2*squareSize + width - (-2*squareSize))/squareSize)
   }
 
   setupGrid(){
