@@ -31,6 +31,7 @@
     "@capacitor/status-bar": "6.0.0",
     "@datastructures-js/queue": "^4.2.3",
     "@ionic/angular": "^8.0.0",
+    "@pixi/ui": "^2.1.2",
     "@types/http-server": "^0.12.4",
     "@types/node": "^20.14.2",
     "chroma-js": "^2.4.2",

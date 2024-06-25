@@ -7,6 +7,7 @@ import { gsap } from 'gsap';
 import { PixiPlugin } from "gsap/PixiPlugin";
 import { SensorDepthAndTemp} from "./SensorDepthAndTemp";
 import { SensorInterface, SensorData } from "../sensor/SensorInterface";
+import { DepthOptions } from "./DepthOptions"
 
 
 @Component({
@@ -92,6 +93,10 @@ export class FishViewComponent implements OnInit, AfterViewInit {
     this._addGrid()
     this._addScale()
     this._addSensorDepthAndTempData()
+    const dp = new DepthOptions(1, 30);
+    this.app.stage.addChild(dp);
+    dp.x = 50;
+    dp.y = 50;
 
 
     setInterval(() => {

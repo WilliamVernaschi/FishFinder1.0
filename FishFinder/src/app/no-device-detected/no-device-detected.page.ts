@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {IonButton, IonContent, IonHeader, IonIcon, IonText, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { bluetooth } from 'ionicons/icons';
-import { BluetoothClassicSerialPortOriginal } from "@awesome-cordova-plugins/bluetooth-classic-serial-port";
+// import { BluetoothClassicSerialPortDevice } from "@awesome-cordova-plugins/bluetooth-classic-serial-port";
 
 @Component({
   selector: 'app-no-device-detected',
@@ -15,7 +15,8 @@ import { BluetoothClassicSerialPortOriginal } from "@awesome-cordova-plugins/blu
 })
 export class NoDeviceDetectedPage implements OnInit {
 
-  constructor(private bluetoothSerial: BluetoothClassicSerialPortOriginal) {
+
+  constructor() {
     addIcons({ bluetooth })
   }
 
