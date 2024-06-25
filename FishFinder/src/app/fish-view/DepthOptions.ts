@@ -4,35 +4,25 @@ import {Button, Slider} from "@pixi/ui";
 export class DepthOptions extends Container{
   constructor(minDepth : number, maxDepth : number){
     super()
-    const button = new Button(
-      new Graphics().circle(0, 0, 30).fill(0xff0000)
-    )
-    const bg = new Sprite(Texture.WHITE);
-    bg.tint = 0xab0790;
-    bg.width = 300;
-    bg.height = 50;
-
-    const fill = new Sprite(Texture.WHITE);
-    bg.tint = 0x03ff00;
-    bg.width = 300;
-    bg.height = 50;
-
-    const sld = new Sprite(Texture.WHITE);
-    bg.tint = 0x0403ff;
-    bg.width = 50;
-    bg.height = 50;
 
 
+    const bg = new Graphics().roundRect(0, 0, 200, 20, 5).fill(0xffffff);
+    const fill = new Graphics().roundRect(0, 0, 200, 20, 5).fill(0);
+    const sld = new Graphics().circle(0, 0, 5).fill(0xfbbfcb);
     const slider =
-      new Slider(
-        {bg,
-          fill,
-          slider: sld,
-          min: minDepth,
-          max: maxDepth,
-          value: 50,
-        });
+      new Slider({
+        bg,
+        fill,
+        slider: sld,
+        min: 0,
+        max: 30,
+        value: 15,
+      });
     this.addChild(slider);
+
+    slider.onUpdate.connect((value) => {
+      console.log(`Profundidade : ${value}m`);
+    })
   }
 
 }

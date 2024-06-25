@@ -95,7 +95,7 @@ export class FishViewComponent implements OnInit, AfterViewInit {
     this._addSensorDepthAndTempData()
     const dp = new DepthOptions(1, 30);
     this.app.stage.addChild(dp);
-    dp.x = 50;
+    dp.x = app.stage.width - 275;
     dp.y = 50;
 
 
