@@ -18,7 +18,7 @@ export class Grid extends Container{
     this.W = width
     this.H = height
     this.columns = new Denque()
-    this.squareSize = height / config.resolution
+    this.squareSize = config.resolution;
     this.currDepthView = 30
     this.numColumns = Math.round((2*this.squareSize + this.W - (-2*this.squareSize))/this.squareSize)
     this.sensorInterface = sensorInterface

@@ -1,0 +1,16 @@
+
+
+ion-item {
+  --padding-start: 20px; /* Adjust start padding */
+  --padding-end: 20px; /* Adjust end padding */
+  --inner-padding-end: 0; /* Remove inner end padding */
+}
+
+ion-label {
+  font-weight: 500; /* Medium font weight */
+}
+
+ion-toggle {
+  --handle-background: #3880ff; /* Blue handle background */
+  --handle-background-checked: #3880ff; /* Blue handle background when checked */
+}

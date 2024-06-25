@@ -25,10 +25,50 @@ export class FishViewComponent implements OnInit, AfterViewInit {
   private app : any
   private sensorInterface : any
 
+  _repositionAppElements(){
+    this._removeGrid()
+    this._addGrid()
+    this._removeScale()
+    this._addScale()
+    this._removeSensorDepthAndTempData()
+    this._addSensorDepthAndTempData()
+  }
+
   constructor() { }
 
   ngOnInit() {
     // Initialize PixiJS application in ngAfterViewInit
+  }
+
+  _addGrid(){
+    this.grid = new Grid(this.app.canvas.width,
+      this.app.canvas.height,
+      this.sensorInterface);
+    this.app.stage.addChild(this.grid)
+  }
+  _removeGrid(){
+    this.app.stage.removeChild(this.grid)
+  }
+
+  _addScale(){
+    this.scale = new Scale(this.app.canvas.width,
+      this.app.canvas.height,
+      30
+    )
+    this.app.stage.addChild(this.scale)
+  }
+  _removeScale(){
+    this.app.stage.removeChild(this.scale)
+
+
+  }
+
+  _addSensorDepthAndTempData(){
+    this.sensorDepthAndTempData = new SensorDepthAndTemp()
+    this.app.stage.addChild(this.sensorDepthAndTempData)
+  }
+  _removeSensorDepthAndTempData(){
+    this.app.stage.removeChild(this.sensorDepthAndTempData)
   }
 
   async ngAfterViewInit() {
@@ -45,27 +85,13 @@ export class FishViewComponent implements OnInit, AfterViewInit {
     this.pixiContainer.nativeElement.appendChild(app.canvas);
 
 
-
     const getNumColumns = Grid.getNumColumns(app.canvas.width, app.canvas.height)
 
     this.sensorInterface = new SensorInterface(getNumColumns, true);
 
-    this.grid = new Grid(app.canvas.width,
-      app.canvas.height,
-      this.sensorInterface)
-
-
-    this.scale = new Scale(app.canvas.width,
-      app.canvas.height,
-      30
-    )
-
-    this.sensorDepthAndTempData = new SensorDepthAndTemp()
-
-
-    app.stage.addChild(this.grid)
-    app.stage.addChild(this.scale)
-    app.stage.addChild(this.sensorDepthAndTempData)
+    this._addGrid()
+    this._addScale()
+    this._addSensorDepthAndTempData()
 
 
     setInterval(() => {
@@ -77,9 +103,14 @@ export class FishViewComponent implements OnInit, AfterViewInit {
       const depthView = this.sensorInterface.lowestDepthInCache + 2
 
       this.scale.adjustScale(depthView);
-      this.grid.adjustDepthView(depthView);
+      this.grid.adjustDepthView(depthView)
 
     }, 3000)
+
+    // Reposiciona os elementos quando houver rotação.
+    this.app.renderer.on('resize', (width : number, height : number) => {
+      this._repositionAppElements();
+    })
 
     app.ticker.maxFPS = config.framesPerSecond
     app.ticker.minFPS = config.framesPerSecond

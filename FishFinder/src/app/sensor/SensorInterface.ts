@@ -25,11 +25,11 @@ export class SensorInterface{
     this.dataPointsCacheMaxSize = dataPointsCacheMaxSize
 
     if(simulation){
-      const generator = new SignalGenerator(0.005, 0.05, 250, 30);
+      const generator = new SignalGenerator(0.005, 0.05, 200, 30);
       const sendSignals = () =>{
         this.lastSensorEvent = {type: "samples", transducerData: generator.nextSignal()}
         this.putInCache(this.lastSensorEvent)
-        setTimeout(sendSignals, 20 + random.float(0, 5))
+        setTimeout(sendSignals, 10 + random.float(0, 5))
       }
 
       sendSignals()

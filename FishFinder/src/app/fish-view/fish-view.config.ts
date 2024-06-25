@@ -10,7 +10,7 @@ interface Config {
 }
 
 export const config : Config = {
-  "resolution": 100, // número de quadrados em uma coluna do visor
+  "resolution": 3, // número de píxels da largura de uma coluna
   "receiverDelay": 20, // período de recepção do sinal emitido pelo transmissor, em milissegundos
   "framesPerSecond" : 60,
   depthStyle : new PIXI.TextStyle({
