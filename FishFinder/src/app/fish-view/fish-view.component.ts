@@ -25,6 +25,25 @@ export class FishViewComponent implements OnInit, AfterViewInit {
   private sensorDepthAndTempData : any
   private app : any
   private sensorInterface : any
+  private autoDepthInterval : any
+
+  _useManualDepth(depthView : number, scale : any, grid : any){
+    //if(this.autoDepthInterval) clearInterval(this.autoDepthInterval)
+
+    scale.adjustScale(depthView)
+    grid.adjustDepthView(depthView)
+
+  }
+
+  _useAutoDepth(){
+    this.autoDepthInterval = setInterval(() => {
+      const depthView = this.sensorInterface.lowestDepthInCache + 2
+
+      this.scale.adjustScale(depthView)
+      this.grid.adjustDepthView(depthView)
+
+    }, 3000)
+  }
 
   _repositionAppElements(){
     this._removeGrid()
@@ -93,10 +112,7 @@ export class FishViewComponent implements OnInit, AfterViewInit {
     this._addGrid()
     this._addScale()
     this._addSensorDepthAndTempData()
-    const dp = new DepthOptions(1, 30);
-    this.app.stage.addChild(dp);
-    dp.x = app.stage.width - 275;
-    dp.y = 50;
+
 
 
     setInterval(() => {
@@ -104,13 +120,11 @@ export class FishViewComponent implements OnInit, AfterViewInit {
       this.sensorDepthAndTempData.updateTemp(this.sensorInterface.getTemp())
     }, 1000)
 
-    setInterval(() => {
-      const depthView = this.sensorInterface.lowestDepthInCache + 2
-
-      this.scale.adjustScale(depthView);
-      this.grid.adjustDepthView(depthView)
-
-    }, 3000)
+    this._useAutoDepth();
+    const dp = new DepthOptions(1, 30, this._useManualDepth,this.scale, this.grid, this.autoDepthInterval);
+    this.app.stage.addChild(dp);
+    dp.x = app.stage.width - 275;
+    dp.y = 100;
 
     // Reposiciona os elementos quando houver rotação.
     this.app.renderer.on('resize', (width : number, height : number) => {
