@@ -1,4 +1,13 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+  Input,
+  numberAttribute, booleanAttribute
+} from '@angular/core';
 import * as PIXI from "pixi.js"
 import { Grid } from './Grid'
 import { config } from './fish-view.config'
@@ -8,19 +17,27 @@ import { PixiPlugin } from "gsap/PixiPlugin";
 import { SensorDepthAndTemp} from "./SensorDepthAndTemp";
 import { SensorInterface, SensorData } from "../sensor/SensorInterface";
 import { DepthOptions } from "./DepthOptions"
+import {SensorConfigComponent} from "../sensor-config/sensor-config.component";
+import { setBluetoothDataHandler, initializeBluetooth, TransducerData } from '../no-device-detected/connectSensor';
 
 
 @Component({
   selector: 'app-fish-view',
   templateUrl: './fish-view.component.html',
   styleUrls: ['./fish-view.component.scss'],
+  imports: [
+    SensorConfigComponent
+  ],
   standalone: true
 })
 
-export class FishViewComponent implements OnInit, AfterViewInit {
+export class FishViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('pixiContainer', { static: true }) pixiContainer!: ElementRef;
+  @Input({transform: booleanAttribute}) isSimulation = true;
 
-  private grid : any
+
+
+  private grid: any;
   private scale : any
   private sensorDepthAndTempData : any
   private app : any
@@ -56,8 +73,17 @@ export class FishViewComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
+  private handleBluetoothData(data: TransducerData) {
+    console.log("Received Bluetooth Data:", data);
+    // Handle the received data (e.g., update your visualization)
+  }
+
   ngOnInit() {
-    // Initialize PixiJS application in ngAfterViewInit
+    if(this.isSimulation) {
+      console.log("inicializando conexão bluetooth");
+      initializeBluetooth();
+
+    }
   }
 
   _addGrid(){
@@ -98,16 +124,20 @@ export class FishViewComponent implements OnInit, AfterViewInit {
 
 
     const app = new PIXI.Application();
-    await app.init({resizeTo: window, background: 0x0000ff});
+
+    await app.init({background: 0x0000ff, antialias: true})
+    setTimeout(() => this.resizePixiApp(), 0);
+
 
     this.app = app;
 
+    //app.renderer.autoResize = true;
     this.pixiContainer.nativeElement.appendChild(app.canvas);
 
 
     const getNumColumns = Grid.getNumColumns(app.canvas.width, app.canvas.height)
 
-    this.sensorInterface = new SensorInterface(getNumColumns, true);
+    this.sensorInterface = new SensorInterface(getNumColumns, this.isSimulation)
 
     this._addGrid()
     this._addScale()
@@ -121,13 +151,14 @@ export class FishViewComponent implements OnInit, AfterViewInit {
     }, 1000)
 
     this._useAutoDepth();
-    const dp = new DepthOptions(1, 30, this._useManualDepth,this.scale, this.grid, this.autoDepthInterval);
-    this.app.stage.addChild(dp);
-    dp.x = app.stage.width - 275;
-    dp.y = 100;
+    //const dp = new DepthOptions(1, 30, this._useManualDepth,this.scale, this.grid, this.autoDepthInterval);
+    //this.app.stage.addChild(dp);
+    //dp.x = app.stage.width - 275;
+    //dp.y = 100;
 
     // Reposiciona os elementos quando houver rotação.
     this.app.renderer.on('resize', (width : number, height : number) => {
+      //this.resizePixiApp()
       this._repositionAppElements();
     })
 
@@ -138,10 +169,23 @@ export class FishViewComponent implements OnInit, AfterViewInit {
 
   }
 
+  ngOnDestroy(){
+    this.pixiContainer.nativeElement.removeChild(this.app.canvas);
+    this.app.destroy();
+    console.log("destroyed!");
+  }
+
+  private resizePixiApp() {
+    if (this.app && this.pixiContainer) {
+      this.app.renderer.resize(this.pixiContainer.nativeElement.clientWidth, this.pixiContainer.nativeElement.clientHeight);
+    }
+  }
+
 
   private start() : void {
     // @ts-ignore
     this.app.ticker.add(time => {
+
       this.grid.moveLeft(time.deltaTime)
       this.grid.repositionFirstColumn()
     });

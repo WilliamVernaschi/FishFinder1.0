@@ -4,6 +4,7 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
 import { addIcons } from 'ionicons';
 
 import {alertCircleOutline} from 'ionicons/icons';
+import {SensorConfigComponent} from "../sensor-config/sensor-config.component";
 
 
 @Component({
@@ -11,7 +12,7 @@ import {alertCircleOutline} from 'ionicons/icons';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonCardHeader, IonCard, IonIcon]
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonCardHeader, IonCard, IonIcon, SensorConfigComponent]
 })
 export class Tab2Page {
 

@@ -1,0 +1,41 @@
+<div id="wrapper" [style.top]="absoluteStyle.top" [style.right]="absoluteStyle.right">
+    <ion-fab>
+      <ion-fab-button id="open-custom-dialog">
+        <ion-icon name="menu"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  <ion-modal id="example-modal" #modal trigger="open-custom-dialog" >
+    <ng-template>
+      <div class="wrapper">
+        <h1>Configurações do sensor</h1>
+
+        <ion-list lines="none">
+
+          <ion-item detail="false">
+          <ion-segment value="Automático">
+            <ion-segment-button value="Automático">
+              <ion-label>Automático</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Manual">
+              <ion-label>Manual</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+          </ion-item>
+          <ion-item detail="false">
+            <ion-range
+              aria-label="Custom range"
+              [min]="1"
+              [max]="40"
+              [value]="20"
+              [pin]="true"
+              [ticks]="false"
+              [snaps]="true"
+              [disabled]="false"
+            ></ion-range>
+          </ion-item>
+
+        </ion-list>
+      </div>
+    </ng-template>
+  </ion-modal>
+</div>

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import {IonButton, IonContent, IonHeader, IonIcon, IonText, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { bluetooth } from 'ionicons/icons';
+import { StateService } from '../state.service';
+
 // import { BluetoothClassicSerialPortDevice } from "@awesome-cordova-plugins/bluetooth-classic-serial-port";
 
 @Component({
@@ -16,14 +18,13 @@ import { bluetooth } from 'ionicons/icons';
 export class NoDeviceDetectedPage implements OnInit {
 
 
-  constructor() {
+  constructor(private stateService: StateService) {
     addIcons({ bluetooth })
   }
 
 
   connectBluetooth() {
-    // Your logic to connect to Bluetooth goes here
-    //this.bluetoothSerial.connect();
+    this.stateService.setBluetooth(true);
   }
 
   ngOnInit() {
