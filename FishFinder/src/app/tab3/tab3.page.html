@@ -7,12 +7,56 @@
 <ion-content class="ion-padding">
   <ion-list lines="full">
     <ion-item>
+      <ion-icon name="fish-outline" slot="start"></ion-icon>
       <ion-label>Habilitar modo de simulação</ion-label>
       <ion-toggle slot="end" (ionChange)="toggleSimulationMode($event)" [checked]="isSimulationModeEnabled"></ion-toggle>
     </ion-item>
     <ion-item>
-      <ion-label>Isso não faz nada</ion-label>
+      <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+      <ion-label>Manter tela ligada</ion-label>
       <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+    <ion-item id="abrir-unidades-medida">
+      <ion-icon name="hammer-outline" slot="start"></ion-icon>
+
+      <ion-label>Unidades de medida</ion-label>
+      <ion-icon name="chevron-forward-sharp" slot="end"></ion-icon>
+      <ion-modal id="example-modal" #modal trigger="abrir-unidades-medida" >
+        <ng-template>
+          <div class="wrapper">
+            <h1>Unidades de medida</h1>
+    
+            <ion-list lines="none">
+    
+              <ion-item>
+                <ion-select label="Profundidade" value="Metros">
+                  <ion-select-option value="Metros">Metros</ion-select-option>
+                  <ion-select-option value="Pés">Pé<s></s></ion-select-option>
+                  <ion-select-option value="Jardas">Jardas</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-select label="Temperatura" value="Celsius (ºC)">
+                  <ion-select-option value="Celsius (ºC)">Celsius (ºC)</ion-select-option>
+                  <ion-select-option value="Fahrenheit (ºF)">Fahrenheit (ºF)</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-select label="Distância" value="Quilômetros">
+                  <ion-select-option value="Quilômetros">Quilômetros</ion-select-option>
+                  <ion-select-option value="Milhas">Milhas</ion-select-option>
+                  <ion-select-option value="Náutica (nm, pé)">Náutica (nm, pé)</ion-select-option>
+                  <ion-select-option value="Náutica (nm, m)">Náutica (nm, m)</ion-select-option>
+
+
+                </ion-select>
+              </ion-item>
+                
+    
+            </ion-list>
+          </div>
+        </ng-template>
+      </ion-modal>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -1,28 +1,24 @@
 import { Component } from '@angular/core';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonToggle,
-  IonItem,
-  IonList,
-  IonLabel
-} from '@ionic/angular/standalone';
+import {IonicModule} from "@ionic/angular";
+
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { StateService } from '../state.service'; // Adjust the import path as necessary
+import { addIcons } from 'ionicons';
+import { fishOutline, phonePortraitOutline, hammerOutline, chevronForwardSharp, caretForwardSharp, chevronForwardCircleSharp } from 'ionicons/icons';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonToggle, IonItem, IonList, IonLabel],
+  imports: [IonicModule],
 })
 export class Tab3Page {
   isSimulationModeEnabled: boolean = false;
 
-  constructor(private stateService: StateService) {}
+  constructor(private stateService: StateService) {
+    addIcons({fishOutline, phonePortraitOutline, hammerOutline, chevronForwardSharp})
+  }
 
   ngOnInit() {
     this.stateService.simulationMode$.subscribe((enabled: boolean) => {

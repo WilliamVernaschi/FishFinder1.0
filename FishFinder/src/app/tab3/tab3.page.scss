@@ -14,3 +14,52 @@ ion-toggle {
   --handle-background: #3880ff; /* Blue handle background */
   --handle-background-checked: #3880ff; /* Blue handle background when checked */
 }
+
+ion-modal#example-modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#example-modal h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal#example-modal ion-icon {
+  margin-right: 6px;
+
+  width: 48px;
+  height: 48px;
+
+  padding: 4px 0;
+
+  color: #aaaaaa;
+}
+
+ion-modal#example-modal .wrapper {
+  margin-bottom: 10px;
+}
+ion-range::part(pin)::before {
+  content: none;
+}
+ion-range::part(pin) {
+  transform: scale(1.01);
+  top: -20px;
+
+}
+
+#wrapper{
+    position: absolute;
+}
+ion-fab-button::part(native) {
+  background-color: #b7f399;
+  border-radius: 15px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  color: black;
+}
+
+
+
+

@@ -14,12 +14,16 @@ import {menu} from "ionicons/icons";
 })
 export class SensorConfigComponent {
   //@ViewChild('customSelect', { static: false }) selectRef!: IonSelect;
+  segmentValue: string = 'Automático';
   @Input({transform: numberAttribute}) x = 100;
   @Input({transform: numberAttribute}) y = 100;
 
 
   constructor() {
     addIcons({menu});
+  }
+  onSegmentChange(event: any) {
+    this.segmentValue = event.detail.value;
   }
 
   get absoluteStyle() {
