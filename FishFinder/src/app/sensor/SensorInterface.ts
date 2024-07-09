@@ -2,6 +2,7 @@
 import { MinQueue } from "../minQueue/minQueue";
 import {SignalGenerator} from "../simulator/signalGenerator";
 import random from "random";
+import { TransducerData, initializeBluetooth, setBluetoothDataHandler } from "../no-device-detected/connectSensor";
 
 interface TransducerDataPoint {
   intensity : number,
@@ -35,12 +36,14 @@ export class SensorInterface{
       sendSignals()
     }
     else{
-      const eventSource = new EventSource('http://localhost:3000/sensor');
-
-      eventSource.onmessage = (event) => {
-        this.lastSensorEvent = JSON.parse(event.data)
-        this.putInCache(this.lastSensorEvent)
+      const sendSignals = (data : TransducerData) => {
+        console.log("bluetooth data is being handled!");
+        this.lastSensorEvent = {type: "samples", transducerData : data.transducerData};
+        this.putInCache(this.lastSensorEvent);
       }
+      setBluetoothDataHandler(sendSignals);
+      //console.log("starting bluetooth!");
+      initializeBluetooth();
     }
 
 
