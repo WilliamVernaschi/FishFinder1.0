@@ -12,9 +12,9 @@
       <ion-toggle slot="end" (ionChange)="toggleSimulationMode($event)" [checked]="isSimulationModeEnabled"></ion-toggle>
     </ion-item>
     <ion-item>
-      <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+      <ion-icon name="phone-portrait-outline" slot="start" ></ion-icon>
       <ion-label>Manter tela ligada</ion-label>
-      <ion-toggle slot="end"></ion-toggle>
+      <ion-toggle slot="end" (ionChange)="toggleScreenAlwaysAwake($event)" [checked]="isScreenAlwaysAwake"></ion-toggle>
     </ion-item>
     <ion-item id="abrir-unidades-medida">
       <ion-icon name="hammer-outline" slot="start"></ion-icon>
@@ -29,20 +29,20 @@
             <ion-list lines="none">
     
               <ion-item>
-                <ion-select label="Profundidade" value="Metros">
+                <ion-select label="Profundidade" [value]="depthUnit" (ionChange)="onDepthUnitChange($event)">
                   <ion-select-option value="Metros">Metros</ion-select-option>
                   <ion-select-option value="Pés">Pé<s></s></ion-select-option>
                   <ion-select-option value="Jardas">Jardas</ion-select-option>
                 </ion-select>
               </ion-item>
               <ion-item>
-                <ion-select label="Temperatura" value="Celsius (ºC)">
-                  <ion-select-option value="Celsius (ºC)">Celsius (ºC)</ion-select-option>
-                  <ion-select-option value="Fahrenheit (ºF)">Fahrenheit (ºF)</ion-select-option>
+                <ion-select label="Temperatura" [value]="temperatureUnit" (ionChange)="onTemperatureUnitChange($event)">
+                  <ion-select-option value="Celsius">Celsius (ºC)</ion-select-option>
+                  <ion-select-option value="Fahrenheit">Fahrenheit (ºF)</ion-select-option>
                 </ion-select>
               </ion-item>
               <ion-item>
-                <ion-select label="Distância" value="Quilômetros">
+                <ion-select label="Distância" [value]="distanceUnit" (ionChange)="onDistanceUnitChange($event)">
                   <ion-select-option value="Quilômetros">Quilômetros</ion-select-option>
                   <ion-select-option value="Milhas">Milhas</ion-select-option>
                   <ion-select-option value="Náutica (nm, pé)">Náutica (nm, pé)</ion-select-option>

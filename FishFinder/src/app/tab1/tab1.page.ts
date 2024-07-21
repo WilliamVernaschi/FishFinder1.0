@@ -20,11 +20,12 @@ export class Tab1Page {
   isBluetoothEnabled: boolean = false;
   constructor(private stateService: StateService) {}
   ngOnInit() {
-    this.stateService.simulationMode$.subscribe((enabled: any) => {
+    this.stateService.simulationMode$.subscribe((enabled: boolean) => {
+      
       this.isSimulationModeEnabled = enabled;
       this.isBluetoothEnabled = false;
     });
-    this.stateService.bluetooth$.subscribe((enabled: any) => {
+    this.stateService.bluetooth$.subscribe((enabled: boolean) => {
       this.isBluetoothEnabled = enabled;
     });
 

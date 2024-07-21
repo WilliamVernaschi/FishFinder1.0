@@ -25,6 +25,8 @@ export class SensorInterface{
     this.dataPointsCache = new MinQueue<number>()
     this.dataPointsCacheMaxSize = dataPointsCacheMaxSize
 
+    console.log(simulation ? "É símulação" : "Não é simulação");
+
     if(simulation){
       const generator = new SignalGenerator(0.005, 0.05, 200, 30);
       const sendSignals = () =>{
