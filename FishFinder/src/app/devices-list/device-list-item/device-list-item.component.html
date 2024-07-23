@@ -1,0 +1,12 @@
+<ion-item>
+  <ion-icon name="play" slot="start"></ion-icon>
+  <ion-label>{{ sensor.name }}</ion-label>
+  <ion-buttons slot="end">
+    <ion-button (click)="editSensor(sensor)">
+      <ion-icon name="create"></ion-icon>
+    </ion-button>
+    <ion-button (click)="deleteSensor(sensor)">
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-item>

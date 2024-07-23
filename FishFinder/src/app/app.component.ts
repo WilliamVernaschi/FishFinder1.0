@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {IonApp, IonTabs} from '@ionic/angular/standalone';
 import {FishViewComponent} from "./fish-view/fish-view.component";
-import { IonicStorageModule } from '@ionic/storage-angular';
 
 
 @Component({

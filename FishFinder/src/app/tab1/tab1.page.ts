@@ -3,7 +3,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/stan
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import {FishViewComponent} from "../fish-view/fish-view.component";
 import {NgIf} from "@angular/common";
-import {NoDeviceDetectedPage} from "../no-device-detected/no-device-detected.page";
+import {DevicesList} from "../devices-list/devices-list.page";
 import { StateService } from '../state.service';
 import {SensorConfigComponent} from "../sensor-config/sensor-config.component"; // Adjust the import path as necessary
 
@@ -13,7 +13,7 @@ import {SensorConfigComponent} from "../sensor-config/sensor-config.component"; 
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, FishViewComponent, NgIf, NoDeviceDetectedPage, SensorConfigComponent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, FishViewComponent, NgIf, SensorConfigComponent, DevicesList],
 })
 export class Tab1Page {
   isSimulationModeEnabled: boolean = false;
@@ -21,7 +21,7 @@ export class Tab1Page {
   constructor(private stateService: StateService) {}
   ngOnInit() {
     this.stateService.simulationMode$.subscribe((enabled: boolean) => {
-      
+
       this.isSimulationModeEnabled = enabled;
       this.isBluetoothEnabled = false;
     });

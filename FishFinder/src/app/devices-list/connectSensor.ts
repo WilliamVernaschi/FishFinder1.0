@@ -1,4 +1,4 @@
-import { BleClient, numbersToDataView } from '@capacitor-community/bluetooth-le';
+import {BleClient, BleDevice, numbersToDataView} from '@capacitor-community/bluetooth-le';
 
 const TRANSDUCER_DATA_SERVICE = '990badb7-6950-4519-a146-fdfe650d4a45';
 const TRANSDUCER_DATA_CHARACTERISTIC = '54070bf4-2509-4c82-9fa0-d01bb89056c3';
@@ -10,16 +10,38 @@ typedef struct TransducerSignal{
   unsigned char values[200];
 } TransducerSignal;
  */
-export async function initializeBluetooth(): Promise<void> {  try {
+
+export async function scan(): Promise<void> {
+  try {
     await BleClient.initialize();
 
-    const device = await BleClient.requestDevice({
-      services: [TRANSDUCER_DATA_SERVICE],
-    });
+    await BleClient.requestLEScan(
+      {
+        services: [TRANSDUCER_DATA_SERVICE],
+      },
+      (result) => {
+        handleScannedDevices(result.device);
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-    // connect to device, the onDisconnect callback is optional
+export async function stopScan() : Promise<void> {
+  try{
+    await BleClient.stopLEScan()
+    console.log("stopped scan")
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
+export async function connect(device : BleDevice){
+
+  try {
     await BleClient.connect(device.deviceId, (deviceId) => onDisconnect(deviceId));
-    console.log('conectou ao dispositvo', device);
 
     await BleClient.startNotifications(
       device.deviceId,
@@ -29,13 +51,32 @@ export async function initializeBluetooth(): Promise<void> {  try {
         handleBluetoothData(parseTransducerData(value));
       }
     );
+  }
+  catch (error){
+    console.error(error);
+  }
+}
 
-    // disconnect after 10 sec
-    setTimeout(async () => {
-      await BleClient.stopNotifications(device.deviceId, TRANSDUCER_DATA_SERVICE, TRANSDUCER_DATA_CHARACTERISTIC);
-      await BleClient.disconnect(device.deviceId);
-      console.log('disconnected from device', device);
-    }, 10000);
+export async function initializeBluetooth(): Promise<void> {  try {
+  await BleClient.initialize({ androidNeverForLocation: true });
+
+  const device = await BleClient.requestDevice({
+    services: [TRANSDUCER_DATA_SERVICE],
+  });
+
+  // connect to device, the onDisconnect callback is optional
+  await BleClient.connect(device.deviceId, (deviceId) => onDisconnect(deviceId));
+
+  await BleClient.startNotifications(
+    device.deviceId,
+    TRANSDUCER_DATA_SERVICE,
+    TRANSDUCER_DATA_CHARACTERISTIC,
+    (value) => {
+      handleBluetoothData(parseTransducerData(value));
+    }
+  );
+
+
   } catch (error) {
     console.error(error);
   }
@@ -75,4 +116,10 @@ let handleBluetoothData: (data: TransducerData) => void = () => {};
 // Export a function to set the handler
 export function setBluetoothDataHandler(handler: (data: TransducerData) => void) {
   handleBluetoothData = handler;
+}
+
+let handleScannedDevices: (device : BleDevice) => void = () => {};
+
+export function setScannedDevicesHandler(handler : (device : BleDevice) => void){
+  handleScannedDevices = handler;
 }

@@ -1,7 +1,15 @@
 import { Component } from '@angular/core';
-import {IonicModule} from "@ionic/angular";
+import {
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem, IonLabel,
+  IonList, IonModal, IonSelect, IonSelectOption,
+  IonTitle,
+  IonToggle,
+  IonToolbar
+} from "@ionic/angular/standalone";
 
-import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { StateService } from '../state.service'; // Adjust the import path as necessary
 import { addIcons } from 'ionicons';
 import { fishOutline, phonePortraitOutline, hammerOutline, chevronForwardSharp, caretForwardSharp, chevronForwardCircleSharp } from 'ionicons/icons';
@@ -21,16 +29,16 @@ const allowSleep = async () => {
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss'],
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonToggle, IonContent, IonTitle, IonToolbar, IonHeader, IonList, IonItem, IonIcon, IonLabel, IonModal, IonSelect, IonSelectOption],
 })
 export class Tab3Page {
   isSimulationModeEnabled: boolean = false;
-  distanceUnit: string = "Quilômetros"; 
-  temperatureUnit: string = "Celsius"; 
-  depthUnit: string = "Metros"; 
+  distanceUnit: string = "Quilômetros";
+  temperatureUnit: string = "Celsius";
+  depthUnit: string = "Metros";
   isScreenAlwaysAwake: boolean = false;
 
-  
+
 
 
 
@@ -48,7 +56,7 @@ export class Tab3Page {
   toggleScreenAlwaysAwake(event: CustomEvent) {
     this.isScreenAlwaysAwake = event.detail.checked;
     console.log('Tela sempre ligada:', this.isScreenAlwaysAwake);
-    
+
     this.isScreenAlwaysAwake ? keepAwake() : allowSleep()
   }
 
@@ -74,7 +82,7 @@ export class Tab3Page {
     this.stateService.simulationMode$.subscribe((enabled: boolean) => {
       this.isSimulationModeEnabled = enabled;
     });
-    
+
   }
 
   simulationModeEnabled() : boolean{

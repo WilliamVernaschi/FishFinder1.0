@@ -1,0 +1,24 @@
+<ion-modal id="example-modal" #modal trigger="openConnectSensorModal">
+  <ng-template>
+    <div class="wrapper">
+      <div class="searching-container">
+
+        <ion-spinner></ion-spinner>
+        <ion-title>Procurando...</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="modal.dismiss(); cancelConnection()">Cancelar</ion-button>
+        </ion-buttons>
+
+      </div>
+
+      <ion-list lines="full" *ngIf="this.sensors.length > 0">
+        <app-connect-sensor-modal-item
+          *ngFor="let sensor of this.sensors"
+          [bleDevice] = sensor
+          (onConnect) = "connectSensor($event)"
+        ></app-connect-sensor-modal-item>
+      </ion-list>
+
+    </div>
+  </ng-template>
+</ion-modal>

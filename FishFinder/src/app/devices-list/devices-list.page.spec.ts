@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoDeviceDetectedPage } from './no-device-detected.page';
+import { NoDeviceDetectedPage } from './devices-list.page';
 
 describe('NoDeviceDetectedPage', () => {
   let component: NoDeviceDetectedPage;

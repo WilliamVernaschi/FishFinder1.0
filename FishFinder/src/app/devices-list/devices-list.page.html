@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sensores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-item-group>
+      <ion-button id="openConnectSensorModal" expand="full" (click)="connectNewSensor()">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Conectar novo sensor
+      </ion-button>
+      <app-connect-sensor-modal
+        (onClose)="closeConnectionModal()"
+        (onNewSensor)="addConnectedSensor($event)"
+        [sensors]="scannedSensors">
+      </app-connect-sensor-modal>
+
+    </ion-item-group>
+
+    <div *ngIf="connectedSensors.length > 0">
+      <ion-item-divider>
+        <ion-label> Sensores </ion-label>
+      </ion-item-divider>
+
+
+      <ion-list  lines="full">
+        <app-device-list-item
+          *ngFor="let sensor of connectedSensors"
+          [sensor]="sensor"
+          (edit)="editSensor($event)"
+          (delete)="deleteSensor($event)">
+        </app-device-list-item>
+      </ion-list>
+    </div>
+
+    <div *ngIf="connectedSensors.length == 0" class="no-sensor-container">
+      <app-no-sensor-connected></app-no-sensor-connected>
+    </div>
+
+
+
+
+</ion-content>
+
+
+
+
+

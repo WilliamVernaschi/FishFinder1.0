@@ -18,7 +18,7 @@ import { SensorDepthAndTemp} from "./SensorDepthAndTemp";
 import { SensorInterface, SensorData } from "../sensor/SensorInterface";
 import { DepthOptions } from "./DepthOptions"
 import {SensorConfigComponent} from "../sensor-config/sensor-config.component";
-import { setBluetoothDataHandler, initializeBluetooth, TransducerData } from '../no-device-detected/connectSensor';
+import { setBluetoothDataHandler, initializeBluetooth, TransducerData } from '../devices-list/connectSensor';
 import { StateService } from '../state.service';
 import { SensorInfoRowComponent } from '../sensor-info-row/sensor-info-row.component';
 
@@ -88,7 +88,7 @@ export class FishViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.temperatureUnit = this.stateService.getTemperatureUnit();
     this.distanceUnit = this.stateService.getDistanceUnit();
 
-    
+
   }
 
   private handleBluetoothData(data: TransducerData) {
@@ -101,7 +101,7 @@ export class FishViewComponent implements OnInit, AfterViewInit, OnDestroy {
       //initializeBluetooth();
 
     }
-    
+
   }
 
   _addGrid(){
@@ -216,7 +216,7 @@ export class FishViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.stateService.manualDepth$.subscribe(depth => {
       if (this.viewType === 'manual') {
-        if(this.autoDepthInterval){ 
+        if(this.autoDepthInterval){
           clearInterval(this.autoDepthInterval)
           console.log("Cleared auto depth interval", this.autoDepthInterval)
         }
@@ -226,7 +226,7 @@ export class FishViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.start()
 
-    
+
 
   }
 

@@ -1,4 +1,5 @@
 <!-- <app-fish-view [isSimulation]="true" style="height: 100%" *ngIf="isSimulationModeEnabled && !isBluetoothEnabled"></app-fish-view> !-->
+
+<app-devices-list *ngIf="!isBluetoothEnabled && !isSimulationModeEnabled"></app-devices-list>
 <app-fish-view [isSimulation]="true" style="height: 100%" *ngIf="isSimulationModeEnabled && !isBluetoothEnabled"></app-fish-view>
-<app-no-device-detected *ngIf="!isBluetoothEnabled && !isSimulationModeEnabled"></app-no-device-detected>
 
