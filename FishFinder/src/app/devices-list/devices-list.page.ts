@@ -28,15 +28,32 @@ import {BleDevice} from "@capacitor-community/bluetooth-le";
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonText, IonButton, IonIcon, IonList, DeviceListItemComponent, IonItem, IonItemGroup, IonItemDivider, IonLabel, NoSensorConnectedComponent, IonModal, ConnectSensorModalComponent]
 })
 export class DevicesList {
-  public connectedSensors : Array<BleDevice> = [];
-  public scannedSensors : Array<BleDevice> = [];
+  public connectedSensors : Set<BleDevice> = new Set();
+  public scannedSensors : Set<BleDevice> = new Set();
 
   constructor(private stateService: StateService) {
     addIcons({ bluetooth, add })
 
     setScannedDevicesHandler((device : BleDevice) => {
-      this.scannedSensors.push(device)
+      if(!this.connectedSensors.has(device)){
+        this.scannedSensors.add(device)
+      }
     })
+
+    const dummy: BleDevice = {
+      deviceId: '123',
+      name: 'Dummy 1',
+      uuids: ['uuid1', 'uuid2']
+    };
+    const dummy2: BleDevice = {
+      deviceId: '1234',
+      name: 'Dummy 2',
+      uuids: ['uuid1', 'uuid2']
+    };
+
+    this.scannedSensors.add(dummy)
+    this.scannedSensors.add(dummy2)
+
   }
 
 
@@ -49,7 +66,6 @@ export class DevicesList {
 
   editSensor(sensor: any) {
     console.log('Edit sensor', sensor);
-    // Add your logic to edit the sensor
   }
 
   async closeConnectionModal(){
@@ -57,12 +73,13 @@ export class DevicesList {
     await stopScan()
   }
 
-  deleteSensor(sensor: any) {
+  deleteSensor(sensor: BleDevice) {
+    this.connectedSensors.delete(sensor)
     console.log('Delete sensor', sensor);
-    // Add your logic to delete the sensor
   }
 
   addConnectedSensor(sensor : BleDevice) {
-    this.connectedSensors.push(sensor)
+    this.connectedSensors.add(sensor)
+    this.scannedSensors.delete(sensor)
   }
 }

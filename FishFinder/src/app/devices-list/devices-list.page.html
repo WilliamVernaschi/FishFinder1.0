@@ -18,7 +18,7 @@
 
     </ion-item-group>
 
-    <div *ngIf="connectedSensors.length > 0">
+    <div *ngIf="connectedSensors.size > 0">
       <ion-item-divider>
         <ion-label> Sensores </ion-label>
       </ion-item-divider>
@@ -34,7 +34,7 @@
       </ion-list>
     </div>
 
-    <div *ngIf="connectedSensors.length == 0" class="no-sensor-container">
+    <div *ngIf="connectedSensors.size == 0" class="no-sensor-container">
       <app-no-sensor-connected></app-no-sensor-connected>
     </div>
 

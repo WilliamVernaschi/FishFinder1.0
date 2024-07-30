@@ -31,16 +31,18 @@ ion-modal#example-modal .wrapper {
   align-items: center;
   justify-content: center;
   height: 100%;
-  gap: 30px;
+  gap: 20px;
+  justify-content: space-between;
   text-align: center;
+  
   padding: 10px
-}
-
-ion-spinner {
-  margin-bottom: 5px;
 }
 
 p {
   font-size: 18px;
-  color: var(--ion-color-medium);
+  margin-bottom: 0;
+}
+
+#searching-text{
+  font-weight: 600;
 }

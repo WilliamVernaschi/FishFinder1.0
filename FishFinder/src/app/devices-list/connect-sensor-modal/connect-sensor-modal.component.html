@@ -4,18 +4,18 @@
       <div class="searching-container">
 
         <ion-spinner></ion-spinner>
-        <ion-title>Procurando...</ion-title>
+        <p id="searching-text">Procurando...<p>
         <ion-buttons slot="end">
           <ion-button (click)="modal.dismiss(); cancelConnection()">Cancelar</ion-button>
         </ion-buttons>
 
       </div>
 
-      <ion-list lines="full" *ngIf="this.sensors.length > 0">
+      <ion-list lines="full" *ngIf="this.sensors.size > 0">
         <app-connect-sensor-modal-item
           *ngFor="let sensor of this.sensors"
           [bleDevice] = sensor
-          (onConnect) = "connectSensor($event)"
+          (onConnect) = "connectSensor($event); modal.dismiss()"
         ></app-connect-sensor-modal-item>
       </ion-list>
 

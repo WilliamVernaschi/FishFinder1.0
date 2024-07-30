@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {
   IonButton,
   IonButtons,
@@ -16,6 +16,7 @@ import {ConnectSensorModalItemComponent} from "./connect-sensor-modal-item/conne
 import {BleDevice} from "@capacitor-community/bluetooth-le";
 import {NgForOf, NgIf} from "@angular/common";
 import {connect} from '../connectSensor'
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-connect-sensor-modal',
@@ -38,10 +39,11 @@ import {connect} from '../connectSensor'
   ]
 })
 export class ConnectSensorModalComponent{
-  public bleSensorDevice : Array<BleDevice> = []
+  public bleSensorDevice : Set<BleDevice> = new Set()
   @Output() onClose = new EventEmitter<any>()
   @Output() onNewSensor = new EventEmitter<any>()
-  @Input() sensors!: Array<BleDevice>;
+  @Input() sensors!: Set<BleDevice>;
+  @ViewChild('modal') modal! : ModalController;
 
   constructor() {
     addIcons({ personCircle })
@@ -55,5 +57,7 @@ export class ConnectSensorModalComponent{
   async connectSensor(sensor: BleDevice) {
     await connect(sensor);
     this.onNewSensor.emit(sensor)
+    this.modal.dismiss()
+    
   }
 }

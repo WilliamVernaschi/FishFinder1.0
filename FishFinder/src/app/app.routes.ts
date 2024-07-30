@@ -21,5 +21,9 @@ export const routes: Routes = [
     path: 'splash-screen',
     loadComponent: () => import('./splash-screen/splash-screen.page').then( m => m.SplashScreenPage)
   },
+  {
+    path: 'fish-view',
+    loadComponent: () => import('./fish-view/fish-view.page').then( m => m.FishViewPage)
+  },
 
 ];

@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { BleDevice } from '@capacitor-community/bluetooth-le';
 import {
   IonIcon,
   IonItem,
@@ -7,7 +8,8 @@ import {
   IonButton
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { ellipsisVertical, play, create } from 'ionicons/icons';
+import { trash, play, create } from 'ionicons/icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-device-list-item',
@@ -24,18 +26,26 @@ import { ellipsisVertical, play, create } from 'ionicons/icons';
   standalone: true
 })
 export class DeviceListItemComponent {
-  @Input() sensor: any;
-  @Output() edit = new EventEmitter<any>();
-  @Output() delete = new EventEmitter<any>();
+  @Input() sensor!: BleDevice;
+  @Output() edit = new EventEmitter<BleDevice>();
+  @Output() delete = new EventEmitter<BleDevice>();
 
-  constructor() {
-    addIcons({play, ellipsisVertical, create})
+  constructor(private router: Router) {
+    addIcons({play, trash, create})
   }
-  editSensor(sensor: any) {
+  editSensor(sensor: BleDevice) {
     this.edit.emit(sensor);
   }
 
-  deleteSensor(sensor: any) {
+  deleteSensor(sensor: BleDevice) {
     this.delete.emit(sensor);
+  }
+  viewSensorData(sensor : BleDevice) {
+    console.log("connecting!!")
+    this.router.navigate(['/fish-view'], {
+      queryParams: {
+        sensor: JSON.stringify(sensor)
+      }
+    });
   }
 }
