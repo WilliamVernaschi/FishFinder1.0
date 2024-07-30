@@ -24,6 +24,10 @@ export const routes: Routes = [
   {
     path: 'fish-view',
     loadComponent: () => import('./fish-view/fish-view.page').then( m => m.FishViewPage)
+  },  {
+    path: 'cadastro',
+    loadComponent: () => import('./cadastro/cadastro.page').then( m => m.CadastroPage)
   },
+
 
 ];

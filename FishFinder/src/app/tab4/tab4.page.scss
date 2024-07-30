@@ -1,31 +1,33 @@
 ion-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    height: 100%;
-    position: relative;
-  
-    .profile-pic-container {
-      margin-top: 50px;
-    }
-  
-    .profile-pic {
-      font-size: 200px;
-      color: #888;
-    }
-  
-    .signup-message {
-      margin-top: 20px;
-      font-size: 36px;
-    }
-  
-    .signin-message {
-      display: flex;
-      align-items: center;
-      margin-top: auto; /* Pushes the sign-in message to the bottom */
-      font-size: 18px;
-      justify-content: center;
-    }
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.profile-pic-container {
+  margin-top: 50px;
+}
+
+.profile-pic {
+  font-size: 200px;
+  color: #888;
+}
+
+.signup-message {
+  margin-top: 20px;
+  font-size: 36px;
+}
+
+.signin-message {
+  display: flex; /* Ensure flex display for alignment */
+  align-items: center;
+  font-size: 18px;
+  justify-content: center;
+  text-align: center;
+  position: fixed;
+  bottom: 20px;
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Correct centering offset */
+}
